@@ -22,6 +22,7 @@ import { KeyTool, SModelElementImpl } from 'sprotty';
  */
 export class DisabledKeyTool extends KeyTool {
     override decorate(vnode: VNode, element: SModelElementImpl): VNode {
+        console.log('disabled-keytool.ts: decorate() called.');
         return vnode;
     }
 }

@@ -35,6 +35,7 @@ export function registerValidationChecks(services: StatesServices) {
 export class StatesValidator {
 
     checkState(state: State, accept: ValidationAcceptor): void {
+        console.log("checkState states-validator");
         const event2transition = new MultiMap<string, Transition>();
         for (const transition of state.transitions) {
             if (transition.event.ref?.name) {

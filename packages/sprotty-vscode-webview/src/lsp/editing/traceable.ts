@@ -24,6 +24,7 @@ export interface Traceable {
 }
 
 export function isTraceable<T extends SModelElement | SModelElementImpl>(element: T): element is Traceable & T {
+    console.log('traceable.ts: isTraceable() called.');
    return !!(element as any).trace && !!getRange((element as any).trace);
 }
 
@@ -31,6 +32,7 @@ export function getRange(traceable: Traceable): Range;
 export function getRange(trace: string): Range | undefined;
 export function getRange(trace: object): Range | undefined;
 export function getRange(thing: string | Traceable | object): Range | undefined {
+    console.log('traceable.ts: getRange() called.');
     const trace = typeof thing === 'string'
         ? thing
         : (thing as any).trace;
@@ -53,6 +55,7 @@ export function getRange(thing: string | Traceable | object): Range | undefined 
 }
 
 export function getURI(traceable: Traceable): URI {
+    console.log('traceable.ts: getURI() called.');
     return URI.parse(traceable.trace).with({
         query: null,
         fragment: null

@@ -67,6 +67,7 @@ export class LspWebviewEndpoint extends WebviewEndpoint {
     }
 
     override async receiveAction(message: ActionMessage): Promise<void> {
+        //console.log('lsp-webview-endpoint.ts: receiveAction() called.');
         await super.receiveAction(message);
         await this.languageClient.sendNotification(acceptMessageType, message);
     }

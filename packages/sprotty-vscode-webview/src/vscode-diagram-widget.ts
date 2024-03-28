@@ -43,6 +43,7 @@ export abstract class VscodeDiagramWidget {
     }
 
     protected initializeHtml(): void {
+        console.log('vscode-diagram-widget.ts: initializeHtml() called.');
         const containerDiv = document.getElementById(this.diagramIdentifier.clientId + '_container');
         if (containerDiv) {
             const svgContainer = document.createElement("div");
@@ -67,12 +68,14 @@ export abstract class VscodeDiagramWidget {
     }
 
     protected initializeSprotty(): void {
+        console.log('vscode-diagram-widget.ts: initializeSprotty() called.');
         if (this.modelSource instanceof DiagramServerProxy)
             this.modelSource.clientId = this.diagramIdentifier.clientId;
         this.requestModel();
     }
 
     async requestModel(): Promise<void> {
+        console.log('vscode-diagram-widget.ts: requestModel() called.');
         try {
             const response = await this.actionDispatcher.request(RequestModelAction.create({
                 sourceUri: this.diagramIdentifier.uri,
@@ -88,6 +91,7 @@ export abstract class VscodeDiagramWidget {
     }
 
     setStatus(status: ServerStatusAction): void {
+        console.log('vscode-diagram-widget.ts: setStatus() called.');
         this.statusMessageDiv.textContent = status.message;
         this.removeClasses(this.statusMessageDiv, 1);
         this.statusMessageDiv.classList.add(status.severity.toLowerCase());
@@ -115,6 +119,7 @@ export abstract class VscodeDiagramWidget {
     }
 
     protected removeClasses(element: Element, keep: number): void {
+        console.log('vscode-diagram-widget.ts: removeClasses() called.');
         const classes = element.classList;
         while (classes.length > keep) {
             const item = classes.item(classes.length - 1);

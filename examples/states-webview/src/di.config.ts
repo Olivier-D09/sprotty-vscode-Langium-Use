@@ -21,13 +21,15 @@ import { Container, ContainerModule } from 'inversify';
 import {
     configureCommand, configureModelElement, ConsoleLogger, CreateElementCommand, HtmlRootImpl,
     HtmlRootView, LogLevel, ManhattanEdgeRouter, overrideViewerOptions, PreRenderedElementImpl,
-    PreRenderedView, RectangularNodeView, SGraphView, SLabelView, SModelRootImpl,
+    PreRenderedView, SGraphView, SLabelView, SModelRootImpl,
     SRoutingHandleImpl, SRoutingHandleView, TYPES, loadDefaultModules, SGraphImpl, SLabelImpl,
-    hoverFeedbackFeature, popupFeature, creatingOnDragFeature, editLabelFeature, labelEditUiModule
+    hoverFeedbackFeature, popupFeature, creatingOnDragFeature, editLabelFeature, labelEditUiModule, RectangularNodeView
 } from 'sprotty';
 import { CustomRouter } from './custom-edge-router';
 import { CreateTransitionPort, StatesEdge, StatesNode } from './model';
 import { PolylineArrowEdgeView, TriangleButtonView } from './views';
+
+console.log("di.config");
 
 const statesDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -38,7 +40,7 @@ const statesDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) 
     configureModelElement(context, 'graph', SGraphImpl, SGraphView, {
         enable: [hoverFeedbackFeature, popupFeature]
     });
-    configureModelElement(context, 'node', StatesNode, RectangularNodeView);
+    configureModelElement(context, 'node', StatesNode, RectangularNodeView,);
     configureModelElement(context, 'label', SLabelImpl, SLabelView, {
         enable: [editLabelFeature]
     });

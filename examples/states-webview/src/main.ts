@@ -36,4 +36,5 @@ export class StatesSprottyStarter extends SprottyLspEditStarter {
     }
 }
 
+console.log("main.ts states-webview");
 new StatesSprottyStarter().start();

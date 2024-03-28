@@ -92,6 +92,7 @@ export class WebviewEndpoint {
     }
 
     protected connect(): void {
+        //console.log('webview-endpoint.ts connect');
         this.disposables.push(
             this.webviewContainer.onDidDispose(() => {
                 this.disposables.forEach(disposable => disposable.dispose());

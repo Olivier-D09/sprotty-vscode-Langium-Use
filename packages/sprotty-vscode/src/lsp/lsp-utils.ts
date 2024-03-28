@@ -19,6 +19,7 @@ import * as lsp from 'vscode-languageclient';
 import { OpenInTextEditorMessage } from './protocol';
 
 export function convertWorkspaceEdit(workspaceEdit: lsp.WorkspaceEdit): vscode.WorkspaceEdit {
+    console.log('lsp-utils.ts: convertWorkspaceEdit() called.');
     const result = new vscode.WorkspaceEdit();
     const changes = workspaceEdit.changes;
     if (changes) {
@@ -44,22 +45,27 @@ export function convertWorkspaceEdit(workspaceEdit: lsp.WorkspaceEdit): vscode.W
 }
 
 export function convertTextEdit(textEdit: lsp.TextEdit): vscode.TextEdit {
+    console.log('lsp-utils.ts: convertTextEdit() called.');
     return new vscode.TextEdit(convertRange(textEdit.range), textEdit.newText);
 }
 
 export function convertRange(range: lsp.Range): vscode.Range {
+    console.log('lsp-utils.ts: convertRange() called.');
     return new vscode.Range(convertPosition(range.start), convertPosition(range.end));
 }
 
 export function convertPosition(position: lsp.Position): vscode.Position {
+    console.log('lsp-utils.ts: convertPosition() called.');
     return new vscode.Position(position.line, position.character);
 }
 
 export function convertUri(uri: string): vscode.Uri {
+    console.log('lsp-utils.ts: convertUri() called.');
     return vscode.Uri.parse(uri);
 }
 
 export function openInTextEditor(message: OpenInTextEditorMessage): void {
+    console.log('lsp-utils.ts: openInTextEditor() called.');
     const editor = vscode.window.visibleTextEditors.find(ed => ed.document.uri.toString() === message.location.uri);
     if (editor) {
         const start = convertPosition(message.location.range.start);

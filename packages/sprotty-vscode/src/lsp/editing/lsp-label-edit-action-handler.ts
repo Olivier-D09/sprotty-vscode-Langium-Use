@@ -24,6 +24,7 @@ import { convertPosition, convertUri, convertWorkspaceEdit, convertRange } from 
 import { LspWebviewEndpoint } from '../lsp-webview-endpoint';
 
 export function addLspLabelEditActionHandler(endpoint: LspWebviewEndpoint): void {
+    console.log('lsp-label-edit-action-handler.ts: addLspLabelEditActionHandler() called.');
     const handler = async (action: LspLabelEditAction) => {
         switch (action.editKind) {
             case 'xref': return chooseCrossReference(action, endpoint);
@@ -34,6 +35,7 @@ export function addLspLabelEditActionHandler(endpoint: LspWebviewEndpoint): void
 };
 
 async function chooseCrossReference(action: LspLabelEditAction, endpoint: LspWebviewEndpoint): Promise<void> {
+    console.log('lsp-label-edit-action-handler.ts: chooseCrossReference() called.');
     const completions = await endpoint.languageClient.sendRequest(CompletionRequest.type, {
         textDocument: { uri: action.location.uri },
         position: convertPosition(action.location.range.start)

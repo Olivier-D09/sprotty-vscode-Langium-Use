@@ -79,6 +79,7 @@ export const StatesModule: Module<StatesServices, PartialLangiumServices & Sprot
  * @returns An object wrapping the shared services and the language-specific services
  */
 export function createStatesServices(context: DefaultSharedModuleContext): { shared: LangiumSprottySharedServices, states: StatesServices } {
+    console.log("statesServices states-module");
     const shared = inject(
         createDefaultSharedModule(context),
         StatesGeneratedSharedModule,

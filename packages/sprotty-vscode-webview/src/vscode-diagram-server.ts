@@ -32,16 +32,19 @@ export class VscodeDiagramServer extends DiagramServerProxy {
     @inject(IRootPopupModelProvider)@optional() protected rootPopupModelProvider: IRootPopupModelProvider;
 
     override initialize(registry: ActionHandlerRegistry) {
+        console.log('vscode-diagram-server.ts: initialize() called.');
         super.initialize(registry);
         registry.register(SelectCommand.KIND, this);
         this.messenger.onNotification(ActionNotification, message => this.messageReceived(message));
     }
 
     protected sendMessage(message: ActionMessage): void {
+        console.log('vscode-diagram-server.ts: sendMessage() called.');
         this.messenger.sendNotification(ActionNotification, HOST_EXTENSION, message);
     }
 
     override handleLocally(action: Action): boolean {
+        console.log('vscode-diagram-server.ts: handleLocally() called.');
         if (action.kind === RequestPopupModelAction.KIND) {
             return this.handleRequestPopupModel(action as RequestPopupModelAction);
         } else {
@@ -50,11 +53,13 @@ export class VscodeDiagramServer extends DiagramServerProxy {
     }
 
     protected override handleServerStateAction(status: ServerStatusAction): boolean {
+        console.log('vscode-diagram-server.ts: handleServerStateAction() called.');
         this.diagramWidgetFactory().setStatus(status);
         return false;
     }
 
     handleRequestPopupModel(action: RequestPopupModelAction): boolean {
+        console.log('vscode-diagram-server.ts: handleRequestPopupModel() called.');
         if (this.rootPopupModelProvider && action.elementId === this.currentRoot.id) {
             this.rootPopupModelProvider.getPopupModel(action, this.currentRoot).then(model => {
                 if (model)

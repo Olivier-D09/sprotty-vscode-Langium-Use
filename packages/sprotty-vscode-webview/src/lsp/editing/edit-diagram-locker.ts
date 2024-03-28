@@ -41,6 +41,7 @@ export class EditDiagramLocker implements IDiagramLocker {
     allowEdit = true;
 
     isAllowed(action: Action): boolean {
+        console.log('edit-diagram-locker.ts: isAllowed() called.');
         return this.allowEdit || this.nonEditActions.indexOf(action.kind) >= 0;
     }
 }

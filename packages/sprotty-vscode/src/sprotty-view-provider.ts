@@ -64,6 +64,7 @@ export class SprottyViewProvider implements vscode.WebviewViewProvider, IWebview
      * be suppressed with the `quiet` option.
      */
     async openDiagram(uri: vscode.Uri, options: OpenViewOptions = {} ): Promise<WebviewEndpoint | undefined> {
+        console.log("openDiagram sprotty-view-provider.ts");
         const identifier = await this.createDiagramIdentifier(uri, options.diagramType);
         if (!identifier) {
             return undefined;
@@ -81,6 +82,7 @@ export class SprottyViewProvider implements vscode.WebviewViewProvider, IWebview
     }
 
     async resolveWebviewView(webviewView: vscode.WebviewView, context: vscode.WebviewViewResolveContext<unknown>, cancelToken: vscode.CancellationToken): Promise<void> {
+        console.log("resolveWebviewView sprotty-view-provider.ts");
         if (this.endpoint) {
             console.warn('Warning: Sprotty webview-view is already resolved.');
         }
@@ -150,6 +152,7 @@ export class SprottyViewProvider implements vscode.WebviewViewProvider, IWebview
      * if the URI matches the `supportedFileExtensions` or no file extensions were provided.
      */
     protected getDiagramType(uri: vscode.Uri): Promise<string | undefined> | string | undefined {
+        console.log("getDiagramType sprotty-view-provider.ts");
         const extname = getExtname(uri);
         if (!this.options.supportedFileExtensions || this.options.supportedFileExtensions.includes(extname)) {
             return this.options.viewType;

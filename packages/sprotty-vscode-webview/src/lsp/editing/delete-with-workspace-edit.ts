@@ -34,6 +34,7 @@ export class DeleteWithWorkspaceEditCommand extends Command {
     }
 
     createWorkspaceEdit(context: CommandExecutionContext): WorkspaceEdit {
+        console.log('delete-with-workspace-edit.ts: createWorkspaceEdit() called.');
         const elements = new Set<SModelElementImpl & Traceable>();
         const index = context.root.index;
         index.all().forEach(e => {
@@ -87,6 +88,7 @@ export class DeleteWithWorkspaceEditCommand extends Command {
     }
 
     protected containsRange(range: Range, otherRange: Range): boolean {
+        console.log('delete-with-workspace-edit.ts: containsRange() called.');
         if (otherRange.start.line < range.start.line || otherRange.end.line < range.start.line) {
             return false;
         }
@@ -103,10 +105,12 @@ export class DeleteWithWorkspaceEditCommand extends Command {
     }
 
     protected shouldDelete<T extends SModelElementImpl>(e: T): e is (Traceable & Selectable & T) {
+        console.log('delete-with-workspace-edit.ts: shouldDelete() called.');
         return isSelectable(e) && e.selected && isTraceable(e);
     }
 
     protected shouldDeleteParent(source: SModelElementImpl | undefined): boolean {
+        console.log('delete-with-workspace-edit.ts: shouldDeleteParent() called.');
         while (source) {
             if (this.shouldDelete(source)) {
                 return true;
@@ -117,6 +121,7 @@ export class DeleteWithWorkspaceEditCommand extends Command {
     }
 
     execute(context: CommandExecutionContext): CommandReturn {
+        console.log('delete-with-workspace-edit.ts: execute() called.');
         this.actionDispatcher.dispatch(<WorkspaceEditAction> {
             kind: WorkspaceEditAction.KIND,
             workspaceEdit: this.createWorkspaceEdit(context)

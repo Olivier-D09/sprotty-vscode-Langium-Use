@@ -48,6 +48,7 @@ export abstract class SprottyStarter {
     }
 
     start(): void {
+        console.log('sprtty-starter.ts: start() called.');
         window.clearTimeout(this.startTimeout);
         this.messenger.start();
         this.acceptDiagramIdentifier();
@@ -55,10 +56,12 @@ export abstract class SprottyStarter {
     }
 
     protected sendReadyMessage(): void {
+        console.log('sprotty-starter.ts: sendReadyMessage() called.');
         this.messenger.sendNotification(WebviewReadyNotification, HOST_EXTENSION, { readyMessage: 'Sprotty Webview ready' });
     }
 
     protected acceptDiagramIdentifier(): void {
+        console.log('sprotty-starter.ts: acceptDiagramIdentifier() called.');
         console.log('Waiting for diagram identifier...');
         this.messenger.onNotification(DiagramIdentifierNotification, newIdentifier => {
             if (this.container) {
@@ -79,6 +82,7 @@ export abstract class SprottyStarter {
     protected abstract createContainer(diagramIdentifier: SprottyDiagramIdentifier): Container;
 
     protected addVscodeBindings(container: Container, diagramIdentifier: SprottyDiagramIdentifier): void {
+        console.log('sprotty-starter.ts: addVscodeBindings() called.');
         container.bind(VsCodeApi).toConstantValue(this.vscodeApi);
         container.bind(VsCodeMessenger).toConstantValue(this.messenger);
         container.bind(VscodeDiagramWidget).toSelf().inSingletonScope();

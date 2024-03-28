@@ -43,6 +43,7 @@ export class LspWebviewPanelManager extends WebviewPanelManager {
     }
 
     protected override createEndpoint(identifier: SprottyDiagramIdentifier): LspWebviewEndpoint {
+        //console.log('lsp-webview-panel-manager.ts: createEndpoint() called.');
         const webviewContainer = this.createWebview(identifier);
         const participant = this.messenger.registerWebviewPanel(webviewContainer);
         return new LspWebviewEndpoint({
@@ -55,6 +56,7 @@ export class LspWebviewPanelManager extends WebviewPanelManager {
     }
 
     protected override didCloseWebview(endpoint: WebviewEndpoint): void {
+        //console.log('lsp-webview-panel-manager.ts: didCloseWebview() called.');
         super.didCloseWebview(endpoint);
         try {
             this.languageClient.sendNotification(didCloseMessageType, endpoint.diagramIdentifier?.clientId);
@@ -64,6 +66,7 @@ export class LspWebviewPanelManager extends WebviewPanelManager {
     }
 
     protected acceptFromLanguageServer(message: ActionMessage): void {
+        //console.log('lsp-webview-panel-manager.ts: acceptFromLanguageServer() called.');
         for (const endpoint of this.endpoints) {
             if (endpoint.diagramIdentifier && endpoint.diagramIdentifier.clientId === message.clientId) {
                 endpoint.sendAction(message);
