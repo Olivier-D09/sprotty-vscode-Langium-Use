@@ -7,75 +7,59 @@
 import type { AstNode, Reference, ReferenceInfo, TypeMetaData } from 'langium';
 import { AbstractAstReflection } from 'langium';
 
-export const StatesTerminals = {
+export const SgrTerminals = {
     WS: /\s+/,
     ID: /[_a-zA-Z][\w_]*/,
     ML_COMMENT: /\/\*[\s\S]*?\*\//,
     SL_COMMENT: /\/\/[^\n\r]*/,
 };
 
-export interface Event extends AstNode {
-    readonly $container: StateMachine;
-    readonly $type: 'Event';
+export interface Greeting extends AstNode {
+    readonly $container: Model;
+    readonly $type: 'Greeting';
+    person: Reference<Person>
+}
+
+export const Greeting = 'Greeting';
+
+export function isGreeting(item: unknown): item is Greeting {
+    return reflection.isInstance(item, Greeting);
+}
+
+export interface Model extends AstNode {
+    readonly $type: 'Model';
+    greetings: Array<Greeting>
+    persons: Array<Person>
+}
+
+export const Model = 'Model';
+
+export function isModel(item: unknown): item is Model {
+    return reflection.isInstance(item, Model);
+}
+
+export interface Person extends AstNode {
+    readonly $container: Model;
+    readonly $type: 'Person';
     name: string
 }
 
-export const Event = 'Event';
+export const Person = 'Person';
 
-export function isEvent(item: unknown): item is Event {
-    return reflection.isInstance(item, Event);
+export function isPerson(item: unknown): item is Person {
+    return reflection.isInstance(item, Person);
 }
 
-export interface State extends AstNode {
-    readonly $container: StateMachine;
-    readonly $type: 'State';
-    name: string
-    transitions: Array<Transition>
+export type SgrAstType = {
+    Greeting: Greeting
+    Model: Model
+    Person: Person
 }
 
-export const State = 'State';
-
-export function isState(item: unknown): item is State {
-    return reflection.isInstance(item, State);
-}
-
-export interface StateMachine extends AstNode {
-    readonly $type: 'StateMachine';
-    events: Array<Event>
-    name: string
-    states: Array<State>
-}
-
-export const StateMachine = 'StateMachine';
-
-export function isStateMachine(item: unknown): item is StateMachine {
-    return reflection.isInstance(item, StateMachine);
-}
-
-export interface Transition extends AstNode {
-    readonly $container: State;
-    readonly $type: 'Transition';
-    event: Reference<Event>
-    state: Reference<State>
-}
-
-export const Transition = 'Transition';
-
-export function isTransition(item: unknown): item is Transition {
-    return reflection.isInstance(item, Transition);
-}
-
-export type StatesAstType = {
-    Event: Event
-    State: State
-    StateMachine: StateMachine
-    Transition: Transition
-}
-
-export class StatesAstReflection extends AbstractAstReflection {
+export class SgrAstReflection extends AbstractAstReflection {
 
     getAllTypes(): string[] {
-        return ['Event', 'State', 'StateMachine', 'Transition'];
+        return ['Greeting', 'Model', 'Person'];
     }
 
     protected override computeIsSubtype(subtype: string, supertype: string): boolean {
@@ -89,11 +73,8 @@ export class StatesAstReflection extends AbstractAstReflection {
     getReferenceType(refInfo: ReferenceInfo): string {
         const referenceId = `${refInfo.container.$type}:${refInfo.property}`;
         switch (referenceId) {
-            case 'Transition:event': {
-                return Event;
-            }
-            case 'Transition:state': {
-                return State;
+            case 'Greeting:person': {
+                return Person;
             }
             default: {
                 throw new Error(`${referenceId} is not a valid reference id.`);
@@ -103,20 +84,12 @@ export class StatesAstReflection extends AbstractAstReflection {
 
     getTypeMetaData(type: string): TypeMetaData {
         switch (type) {
-            case 'State': {
+            case 'Model': {
                 return {
-                    name: 'State',
+                    name: 'Model',
                     mandatory: [
-                        { name: 'transitions', type: 'array' }
-                    ]
-                };
-            }
-            case 'StateMachine': {
-                return {
-                    name: 'StateMachine',
-                    mandatory: [
-                        { name: 'events', type: 'array' },
-                        { name: 'states', type: 'array' }
+                        { name: 'greetings', type: 'array' },
+                        { name: 'persons', type: 'array' }
                     ]
                 };
             }
@@ -130,4 +103,4 @@ export class StatesAstReflection extends AbstractAstReflection {
     }
 }
 
-export const reflection = new StatesAstReflection();
+export const reflection = new SgrAstReflection();

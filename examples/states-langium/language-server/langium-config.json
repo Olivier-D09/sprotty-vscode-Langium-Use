@@ -1,11 +1,11 @@
 {
-    "projectName": "States",
+    "projectName": "Sgr",
     "languages": [{
-        "id": "states",
-        "grammar": "src/states.langium",
-        "fileExtensions": [".sm"],
+        "id": "sgr",
+        "grammar": "src/sgr.langium",
+        "fileExtensions": [".sgr"],
         "textMate": {
-            "out": "../extension/syntaxes/states.tmLanguage.json"
+            "out": "../extension/syntaxes/sgr.tmLanguage.json"
         }
     }],
     "out": "src/generated"

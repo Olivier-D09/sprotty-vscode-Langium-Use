@@ -16,28 +16,28 @@
 
 import { GeneratorContext, LangiumDiagramGenerator } from 'langium-sprotty';
 import { SEdge, SLabel, SModelRoot, SNode, SPort } from 'sprotty-protocol';
-import { State, StateMachine, Transition } from './generated/ast.js';
+import { Model, Person, Greeting } from './generated/ast.js';
 import chalk from 'chalk';
 
 export class StatesDiagramGenerator extends LangiumDiagramGenerator {
 
-    protected generateRoot(args: GeneratorContext<StateMachine>): SModelRoot {
+    protected generateRoot(args: GeneratorContext<Model>): SModelRoot {
         console.log(chalk.blue("root :",args));
         const { document } = args;
         const sm = document.parseResult.value;
         return {
             type: 'graph',
-            id: sm.name ?? 'root',
+            id: sm.$type ?? 'root',
             children: [
-                ...sm.states.map(s => this.generateNode(s, args)),
-                ...sm.states.flatMap(s => s.transitions).map(t => this.generateEdge(t, args))
+                ...sm.persons.map(s => this.generateNode(s, args)),
+                ...sm.greetings.map(t => this.generateEdge(t, args))
             ]
         };
     }
 
-    protected generateNode(state: State, { idCache }: GeneratorContext<StateMachine>): SNode {
-        console.log(chalk.blue("node :",state));
-        const nodeId = idCache.uniqueId(state.name, state);
+    protected generateNode(persons: Person, { idCache }: GeneratorContext<Model>): SNode {
+        console.log(chalk.blue("node :",persons));
+        const nodeId = idCache.uniqueId(persons.name, persons);
         return {
             type: 'node',
             id: nodeId,
@@ -45,7 +45,7 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
                 <SLabel>{
                     type: 'label',
                     id: idCache.uniqueId(nodeId + '.label'),
-                    text: state.name
+                    text: persons.name
                 },
                 <SPort>{
                     type: 'port',
@@ -62,11 +62,11 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
         };
     }
 
-    protected generateEdge(transition: Transition, { idCache }: GeneratorContext<StateMachine>): SEdge {
-        console.log(chalk.blue("edge :",transition));
-        const sourceId = idCache.getId(transition.$container);
-        const targetId = idCache.getId(transition.state?.ref);
-        const edgeId = idCache.uniqueId(`${sourceId}:${transition.event?.ref?.name}:${targetId}`, transition);
+    protected generateEdge(greetings: Greeting, { idCache }: GeneratorContext<Model>): SEdge {
+        console.log(chalk.blue("edge :",greetings));
+        const sourceId = idCache.getId(greetings.$container);
+        const targetId = idCache.getId(greetings);
+        const edgeId = idCache.uniqueId(`${sourceId}:${greetings}:${targetId}`, greetings);
         return {
             type: 'edge',
             id: edgeId,
@@ -76,7 +76,7 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
                 <SLabel>{
                     type: 'label:xref',
                     id: idCache.uniqueId(edgeId + '.label'),
-                    text: transition.event?.ref?.name
+                    text: greetings.$type
                 }
             ]
         };

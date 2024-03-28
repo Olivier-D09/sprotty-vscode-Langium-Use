@@ -19,16 +19,16 @@ import { createDefaultModule, createDefaultSharedModule, inject, Module, Partial
 import { LangiumSprottyServices, LangiumSprottySharedServices, SprottyDiagramServices, SprottySharedModule } from 'langium-sprotty';
 import { DefaultElementFilter, ElkFactory, ElkLayoutEngine, IElementFilter, ILayoutConfigurator } from 'sprotty-elk/lib/elk-layout.js';
 import { StatesDiagramGenerator } from './diagram-generator.js';
-import { StatesGeneratedModule, StatesGeneratedSharedModule } from './generated/module.js';
+import { SgrGeneratedModule, SgrGeneratedSharedModule } from './generated/module.js';
 import { StatesLayoutConfigurator } from './layout-config.js';
-import { registerValidationChecks, StatesValidator } from './states-validator.js';
+import { registerValidationChecks, SgrValidator } from './sgr-validator.js';
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
 export type StatesAddedServices = {
     validation: {
-        StatesValidator: StatesValidator
+        SgrValidator: SgrValidator
     },
     layout: {
         ElkFactory: ElkFactory,
@@ -41,20 +41,20 @@ export type StatesAddedServices = {
  * Union of Langium default services and your custom services - use this as constructor parameter
  * of custom service classes.
  */
-export type StatesServices = LangiumSprottyServices & StatesAddedServices;
+export type SgrServices = LangiumSprottyServices & StatesAddedServices;
 
 /**
  * Dependency injection module that overrides Langium default services and contributes the
  * declared custom services. The Langium defaults can be partially specified to override only
  * selected services, while the custom services must be fully specified.
  */
-export const StatesModule: Module<StatesServices, PartialLangiumServices & SprottyDiagramServices & StatesAddedServices> = {
+export const StatesModule: Module<SgrServices, PartialLangiumServices & SprottyDiagramServices & StatesAddedServices> = {
     diagram: {
         DiagramGenerator: services => new StatesDiagramGenerator(services),
         ModelLayoutEngine: services => new ElkLayoutEngine(services.layout.ElkFactory, services.layout.ElementFilter, services.layout.LayoutConfigurator) as any
     },
     validation: {
-        StatesValidator: () => new StatesValidator()
+        SgrValidator: () => new SgrValidator()
     },
     layout: {
         ElkFactory: () => () => new ElkConstructor({ algorithms: ['layered'] }),
@@ -78,16 +78,16 @@ export const StatesModule: Module<StatesServices, PartialLangiumServices & Sprot
  * @param context Optional module context with the LSP connection
  * @returns An object wrapping the shared services and the language-specific services
  */
-export function createStatesServices(context: DefaultSharedModuleContext): { shared: LangiumSprottySharedServices, states: StatesServices } {
-    console.log("statesServices states-module");
+export function createSgrServices(context: DefaultSharedModuleContext): { shared: LangiumSprottySharedServices, states: SgrServices } {
+    console.log("SgrServices states-module");
     const shared = inject(
         createDefaultSharedModule(context),
-        StatesGeneratedSharedModule,
+        SgrGeneratedSharedModule,
         SprottySharedModule
     );
     const states = inject(
         createDefaultModule({ shared }),
-        StatesGeneratedModule,
+        SgrGeneratedModule,
         StatesModule
     );
     registerValidationChecks(states);

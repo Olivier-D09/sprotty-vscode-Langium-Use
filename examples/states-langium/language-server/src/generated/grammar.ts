@@ -6,112 +6,47 @@
 import type { Grammar } from 'langium';
 import { loadGrammarFromJson } from 'langium';
 
-let loadedStatesGrammar: Grammar | undefined;
-export const StatesGrammar = (): Grammar => loadedStatesGrammar ?? (loadedStatesGrammar = loadGrammarFromJson(`{
+let loadedSgrGrammar: Grammar | undefined;
+export const SgrGrammar = (): Grammar => loadedSgrGrammar ?? (loadedSgrGrammar = loadGrammarFromJson(`{
   "$type": "Grammar",
   "isDeclared": true,
-  "name": "States",
+  "name": "Sgr",
   "rules": [
     {
       "$type": "ParserRule",
-      "name": "StateMachine",
+      "name": "Model",
       "entry": true,
       "definition": {
-        "$type": "Group",
+        "$type": "Alternatives",
         "elements": [
           {
-            "$type": "Keyword",
-            "value": "statemachine"
-          },
-          {
             "$type": "Assignment",
-            "feature": "name",
-            "operator": "=",
-            "terminal": {
-              "$type": "RuleCall",
-              "rule": {
-                "$ref": "#/rules@5"
-              },
-              "arguments": []
-            }
-          },
-          {
-            "$type": "Alternatives",
-            "elements": [
-              {
-                "$type": "Assignment",
-                "feature": "states",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@1"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Assignment",
-                "feature": "events",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@2"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          }
-        ]
-      },
-      "definesHiddenTokens": false,
-      "fragment": false,
-      "hiddenTokens": [],
-      "parameters": [],
-      "wildcard": false
-    },
-    {
-      "$type": "ParserRule",
-      "name": "State",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "state"
-          },
-          {
-            "$type": "Assignment",
-            "feature": "name",
-            "operator": "=",
-            "terminal": {
-              "$type": "RuleCall",
-              "rule": {
-                "$ref": "#/rules@5"
-              },
-              "arguments": []
-            }
-          },
-          {
-            "$type": "Assignment",
-            "feature": "transitions",
+            "feature": "persons",
             "operator": "+=",
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@3"
+                "$ref": "#/rules@1"
               },
               "arguments": []
-            },
-            "cardinality": "*"
+            }
+          },
+          {
+            "$type": "Assignment",
+            "feature": "greetings",
+            "operator": "+=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@2"
+              },
+              "arguments": []
+            }
           }
-        ]
+        ],
+        "cardinality": "*"
       },
       "definesHiddenTokens": false,
-      "entry": false,
       "fragment": false,
       "hiddenTokens": [],
       "parameters": [],
@@ -119,13 +54,13 @@ export const StatesGrammar = (): Grammar => loadedStatesGrammar ?? (loadedStates
     },
     {
       "$type": "ParserRule",
-      "name": "Event",
+      "name": "Person",
       "definition": {
         "$type": "Group",
         "elements": [
           {
             "$type": "Keyword",
-            "value": "event"
+            "value": "person"
           },
           {
             "$type": "Assignment",
@@ -134,7 +69,7 @@ export const StatesGrammar = (): Grammar => loadedStatesGrammar ?? (loadedStates
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@5"
+                "$ref": "#/rules@4"
               },
               "arguments": []
             }
@@ -150,37 +85,36 @@ export const StatesGrammar = (): Grammar => loadedStatesGrammar ?? (loadedStates
     },
     {
       "$type": "ParserRule",
-      "name": "Transition",
+      "name": "Greeting",
       "definition": {
         "$type": "Group",
         "elements": [
           {
-            "$type": "Assignment",
-            "feature": "event",
-            "operator": "=",
-            "terminal": {
-              "$type": "CrossReference",
-              "type": {
-                "$ref": "#/rules@2"
-              },
-              "deprecatedSyntax": false
-            }
-          },
-          {
             "$type": "Keyword",
-            "value": "=>"
+            "value": "Hello"
           },
           {
             "$type": "Assignment",
-            "feature": "state",
+            "feature": "person",
             "operator": "=",
             "terminal": {
               "$type": "CrossReference",
               "type": {
                 "$ref": "#/rules@1"
               },
+              "terminal": {
+                "$type": "RuleCall",
+                "rule": {
+                  "$ref": "#/rules@4"
+                },
+                "arguments": []
+              },
               "deprecatedSyntax": false
             }
+          },
+          {
+            "$type": "Keyword",
+            "value": "!"
           }
         ]
       },
@@ -207,6 +141,30 @@ export const StatesGrammar = (): Grammar => loadedStatesGrammar ?? (loadedStates
       "definition": {
         "$type": "RegexToken",
         "regex": "/[_a-zA-Z][\\\\w_]*/"
+      },
+      "fragment": false,
+      "hidden": false
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "INT",
+      "type": {
+        "$type": "ReturnType",
+        "name": "number"
+      },
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/[0-9]+/"
+      },
+      "fragment": false,
+      "hidden": false
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "STRING",
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/\\"(\\\\\\\\.|[^\\"\\\\\\\\])*\\"|'(\\\\\\\\.|[^'\\\\\\\\])*'/"
       },
       "fragment": false,
       "hidden": false

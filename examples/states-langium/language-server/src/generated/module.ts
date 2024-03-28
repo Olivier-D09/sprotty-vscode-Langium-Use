@@ -4,21 +4,21 @@
  ******************************************************************************/
 
 import type { LangiumGeneratedServices, LangiumGeneratedSharedServices, LangiumSharedServices, LangiumServices, LanguageMetaData, Module } from 'langium';
-import { StatesAstReflection } from './ast.js';
-import { StatesGrammar } from './grammar.js';
+import { SgrAstReflection } from './ast.js';
+import { SgrGrammar } from './grammar.js';
 
-export const StatesLanguageMetaData = {
-    languageId: 'states',
-    fileExtensions: ['.sm'],
+export const SgrLanguageMetaData = {
+    languageId: 'sgr',
+    fileExtensions: ['.sgr'],
     caseInsensitive: false
 } as const satisfies LanguageMetaData;
 
-export const StatesGeneratedSharedModule: Module<LangiumSharedServices, LangiumGeneratedSharedServices> = {
-    AstReflection: () => new StatesAstReflection()
+export const SgrGeneratedSharedModule: Module<LangiumSharedServices, LangiumGeneratedSharedServices> = {
+    AstReflection: () => new SgrAstReflection()
 };
 
-export const StatesGeneratedModule: Module<LangiumServices, LangiumGeneratedServices> = {
-    Grammar: () => StatesGrammar(),
-    LanguageMetaData: () => StatesLanguageMetaData,
+export const SgrGeneratedModule: Module<LangiumServices, LangiumGeneratedServices> = {
+    Grammar: () => SgrGrammar(),
+    LanguageMetaData: () => SgrLanguageMetaData,
     parser: {}
 };
