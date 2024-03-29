@@ -44,7 +44,6 @@ export class LspSprottyEditorProvider extends SprottyEditorProvider {
     }
 
     protected override createEndpoint(identifier: SprottyDiagramIdentifier, webviewContainer: vscode.WebviewPanel): WebviewEndpoint {
-        console.log('lsp-sprotty-editor-provider.ts: createEndpoint() called.');
         const participant = this.messenger.registerWebviewPanel(webviewContainer);
         return new LspWebviewEndpoint({
             languageClient: this.languageClient,
@@ -56,7 +55,6 @@ export class LspSprottyEditorProvider extends SprottyEditorProvider {
     }
 
     protected override disposeDocument(document: SprottyDocument): void {
-        console.log('lsp-sprotty-editor-provider.ts: disposeDocument() called.');
         super.disposeDocument(document);
         try {
             this.languageClient.sendNotification(didCloseMessageType, document.endpoint?.diagramIdentifier?.clientId);
@@ -66,7 +64,6 @@ export class LspSprottyEditorProvider extends SprottyEditorProvider {
     }
 
     protected acceptFromLanguageServer(message: ActionMessage): void {
-        console.log('lsp-sprotty-editor-provider.ts: acceptFromLanguageServer() called.');
         for (const document of this.documents) {
             const endpoint = document.endpoint;
             if (endpoint && endpoint.diagramIdentifier && endpoint.diagramIdentifier.clientId === message.clientId) {

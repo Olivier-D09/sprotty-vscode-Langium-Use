@@ -81,7 +81,6 @@ export class SprottyEditorProvider implements vscode.CustomEditorProvider, IWebv
             dispose: () => this.disposeDocument(document)
         };
         this.documents.push(document);
-        console.log('sprotty-editor-provider.ts openCustomDocument');
         return document;
     }
 

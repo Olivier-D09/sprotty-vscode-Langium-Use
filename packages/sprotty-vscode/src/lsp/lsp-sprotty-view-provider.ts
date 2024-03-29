@@ -44,7 +44,6 @@ export class LspSprottyViewProvider extends SprottyViewProvider {
     }
 
     protected override createEndpoint(webviewContainer: vscode.WebviewView, identifier?: SprottyDiagramIdentifier): WebviewEndpoint {
-        console.log('lsp-sprotty-view-provider.ts: createEndpoint() called.');
         const participant = this.messenger.registerWebviewView(webviewContainer);
         return new LspWebviewEndpoint({
             languageClient: this.languageClient,
@@ -56,7 +55,6 @@ export class LspSprottyViewProvider extends SprottyViewProvider {
     }
 
     protected override didCloseWebview(endpoint: WebviewEndpoint): void {
-        console.log('lsp-sprotty-view-provider.ts: didCloseWebview() called.');
         super.didCloseWebview(endpoint);
         try {
             this.languageClient.sendNotification(didCloseMessageType, endpoint.diagramIdentifier?.clientId);
@@ -66,7 +64,6 @@ export class LspSprottyViewProvider extends SprottyViewProvider {
     }
 
     protected acceptFromLanguageServer(message: ActionMessage): void {
-        console.log('lsp-sprotty-view-provider.ts: acceptFromLanguageServer() called.');
         if (this.endpoint) {
             this.endpoint.sendAction(message);
         }

@@ -37,7 +37,6 @@ export class LanguageClientProxy {
         if (CancellationToken.is(params[params.length - 1])) {
             params.pop();
         }
-        console.log('workspace-edit-action-handler.ts: sendRequest() called.');
         const message: RequestMessage = {
             jsonrpc: '2.0',
             method: signature.method,
@@ -54,7 +53,6 @@ export class LanguageClientProxy {
     sendNotification(type: NotificationType0): void;
     sendNotification<P>(type: NotificationType<P>, params?: P): void;
     sendNotification<P>(signature: MessageSignature, params?: P): void {
-        console.log('workspace-edit-action-handler.ts: sendNotification() called.');
         const message: NotificationMessage = {
             jsonrpc: '2.0',
             method: signature.method,

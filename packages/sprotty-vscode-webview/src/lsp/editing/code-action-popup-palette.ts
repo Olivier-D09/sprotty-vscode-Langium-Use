@@ -39,7 +39,6 @@ export class CodeActionPopupPaletteProvider implements IRootPopupModelProvider {
     @inject(EditDiagramLocker) editDiagramLocker: EditDiagramLocker;
 
     async getPopupModel(action: RequestPopupModelAction, rootElement: SModelRoot): Promise<SModelElement | undefined> {
-        console.log('code-action-popup-palette.ts: getPopupModel() called.');
         const range = getRange(rootElement);
         if (this.editDiagramLocker.allowEdit && range !== undefined) {
             const codeActions = await this.codeActionProvider.getCodeActions(range, 'sprotty.create');
@@ -91,7 +90,6 @@ export class PaletteMouseListener extends PopupHoverMouseListener {
     }
 
     async getWorkspaceEditAction(target: PaletteButton): Promise<Action> {
-        console.log('code-action-popup-palette.ts: getWorkspaceEditAction() called.');
         const codeActions = await this.codeActionProvider.getCodeActions(target.range, target.codeActionKind);
         if (codeActions) {
             for (const codeAction of codeActions) {
@@ -116,7 +114,6 @@ export class CodeActionContextMenuProvider implements IContextMenuItemProvider {
     @inject(EditDiagramLocker) editDiagramLocker: EditDiagramLocker;
 
     async getItems(root: Readonly<SModelRootImpl>, lastMousePosition?: Point | undefined): Promise<MenuItem[]> {
-        console.log('code-action-popup-palette.ts: getItems() called.');
         const items: MenuItem[] = [];
         const range = getRange(root);
         if (this.editDiagramLocker.allowEdit && range !== undefined) {

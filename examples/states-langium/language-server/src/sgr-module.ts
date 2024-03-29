@@ -79,7 +79,6 @@ export const StatesModule: Module<SgrServices, PartialLangiumServices & SprottyD
  * @returns An object wrapping the shared services and the language-specific services
  */
 export function createSgrServices(context: DefaultSharedModuleContext): { shared: LangiumSprottySharedServices, states: SgrServices } {
-    console.log("SgrServices states-module");
     const shared = inject(
         createDefaultSharedModule(context),
         SgrGeneratedSharedModule,

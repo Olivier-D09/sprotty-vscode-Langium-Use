@@ -32,7 +32,6 @@ export function serializeUri(uri: vscode.Uri): string {
 export function createWebviewPanel(identifier: SprottyDiagramIdentifier,
     options: { localResourceRoots: vscode.Uri[], scriptUri: vscode.Uri, cssUri?: vscode.Uri; }): vscode.WebviewPanel {
     const title = createWebviewTitle(identifier);
-    console.log('webview-utils.ts createWebviewPanel title:', title);
     const diagramPanel = vscode.window.createWebviewPanel(
         identifier.diagramType || 'diagram',
         title,

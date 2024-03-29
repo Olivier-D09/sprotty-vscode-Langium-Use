@@ -26,7 +26,6 @@ export class CodeActionProvider {
     @inject(SprottyDiagramIdentifier) readonly diagramIdentifier: SprottyDiagramIdentifier;
 
     async getCodeActions(range: Range, codeActionKind: string): Promise<(CodeAction | Command)[]> {
-        console.log('code-action-provider.ts: getCodeActions() called.');
         const codeActions = await this.languageClientProxy.sendRequest(CodeActionRequest.type, <CodeActionParams> {
             textDocument: {
                 uri: this.diagramIdentifier.uri

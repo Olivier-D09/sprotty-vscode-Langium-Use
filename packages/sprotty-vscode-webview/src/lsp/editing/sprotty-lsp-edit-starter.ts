@@ -29,7 +29,6 @@ import { DeleteWithWorkspaceEditCommand } from './delete-with-workspace-edit';
 
 export abstract class SprottyLspEditStarter extends SprottyStarter {
     protected override addVscodeBindings(container: Container, diagramIdentifier: SprottyDiagramIdentifier) {
-        console.log('spotty-lsp-edit-starter.ts: addVscodeBindings() called.');
         super.addVscodeBindings(container, diagramIdentifier);
         container.rebind(VscodeDiagramServer).to(VscodeLspEditDiagramServer);
         container.bind(EditDiagramLocker).toSelf().inSingletonScope();

@@ -26,7 +26,6 @@ import { getRange, getURI, isTraceable } from './traceable';
 export class VscodeLspEditDiagramServer extends VscodeDiagramServer {
 
     override initialize(registry: ActionHandlerRegistry) {
-        console.log('vscodelsp-edit-diagram-server.ts: initialize() called.');
         super.initialize(registry);
         registry.register(EditLabelAction.KIND, this);
         registry.register(WorkspaceEditAction.KIND, this);
@@ -34,7 +33,6 @@ export class VscodeLspEditDiagramServer extends VscodeDiagramServer {
     }
 
     override handleLocally(action: Action): boolean {
-        console.log('vscodelsp-edit-diagram-server.ts: handleLocally() called.');
         if (action.kind === EditLabelAction.KIND) {
             const label = this.getElement((action as EditLabelAction).labelId);
             if (label && getBasicType(label) === 'label' && isTraceable(label)) {
@@ -55,7 +53,6 @@ export class VscodeLspEditDiagramServer extends VscodeDiagramServer {
     }
 
     protected getElement(elementId: string): SModelElementSchema | undefined {
-        console.log('vscodelsp-edit-diagram-server.ts: getElement() called.');
         const index = new SModelIndex();
         index.add(this.currentRoot);
         return index.getById(elementId);

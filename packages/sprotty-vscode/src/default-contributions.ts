@@ -26,7 +26,6 @@ import { IWebviewEndpointManager } from './webview-endpoint';
  *  - Export as SVG (active when diagram is open)
  */
 export function registerDefaultCommands(manager: IWebviewEndpointManager, context: vscode.ExtensionContext, options: { extensionPrefix: string }): void {
-    //console.log('registerDefaultCommands default-contributions.ts');
     function getURI(commandArgs: any[]): vscode.Uri | undefined {
         if (commandArgs.length > 0 && commandArgs[0] instanceof vscode.Uri) {
             return commandArgs[0];

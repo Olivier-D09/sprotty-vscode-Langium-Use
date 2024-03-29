@@ -67,7 +67,6 @@ export class WebviewPanelManager implements IWebviewEndpointManager {
      * previously opened diagram or creates a new panel.
      */
     async openDiagram(uri: vscode.Uri, options: OpenPanelOptions = {}): Promise<WebviewEndpoint | undefined> {
-        //console.log('webview-panel-manager.ts openDiagram');
         const identifier = await this.createDiagramIdentifier(uri, options.diagramType);
         if (!identifier) {
             return undefined;

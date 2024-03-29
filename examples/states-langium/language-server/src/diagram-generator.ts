@@ -17,12 +17,10 @@
 import { GeneratorContext, LangiumDiagramGenerator } from 'langium-sprotty';
 import { SEdge, SLabel, SModelRoot, SNode, SPort } from 'sprotty-protocol';
 import { Model, Person, Greeting } from './generated/ast.js';
-import chalk from 'chalk';
 
 export class StatesDiagramGenerator extends LangiumDiagramGenerator {
 
     protected generateRoot(args: GeneratorContext<Model>): SModelRoot {
-        console.log(chalk.blue("root :",args));
         const { document } = args;
         const sm = document.parseResult.value;
         return {
@@ -36,7 +34,6 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
     }
 
     protected generateNode(persons: Person, { idCache }: GeneratorContext<Model>): SNode {
-        console.log(chalk.blue("node :",persons));
         const nodeId = idCache.uniqueId(persons.name, persons);
         return {
             type: 'node',
@@ -63,7 +60,6 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
     }
 
     protected generateEdge(greetings: Greeting, { idCache }: GeneratorContext<Model>): SEdge {
-        console.log(chalk.blue("edge :",greetings));
         const sourceId = idCache.getId(greetings.$container);
         const targetId = idCache.getId(greetings);
         const edgeId = idCache.uniqueId(`${sourceId}:${greetings}:${targetId}`, greetings);
