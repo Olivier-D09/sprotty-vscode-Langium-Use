@@ -24,7 +24,6 @@ import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-lan
 let languageClient: LanguageClient;
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log("activate xtext");
     languageClient = createLanguageClient(context);
     const webviewPanelManager = new StatesWebviewPanelManager({
         extensionUri: context.extensionUri,

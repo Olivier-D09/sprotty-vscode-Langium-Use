@@ -17,7 +17,6 @@ import { ManhattanEdgeRouter, SRoutableElementImpl, ManhattanRouterOptions, edge
 
 export class CustomRouter extends ManhattanEdgeRouter {
     override getOptions(edge: SRoutableElementImpl): ManhattanRouterOptions {
-        console.log("getOptions custom-edge-router");
         const defaultOptions = super.getOptions(edge);
         return edge.id === edgeInProgressID
             ? { ...defaultOptions, standardDistance: 1 }

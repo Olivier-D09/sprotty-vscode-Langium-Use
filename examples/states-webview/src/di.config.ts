@@ -29,7 +29,6 @@ import { CustomRouter } from './custom-edge-router';
 import { CreateTransitionPort, StatesEdge, StatesNode } from './model';
 import { PolylineArrowEdgeView, TriangleButtonView } from './views';
 
-console.log("di.config");
 
 const statesDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
