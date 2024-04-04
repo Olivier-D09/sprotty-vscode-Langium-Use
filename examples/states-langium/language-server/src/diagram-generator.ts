@@ -15,8 +15,8 @@
  ********************************************************************************/
 
 import { GeneratorContext, LangiumDiagramGenerator } from 'langium-sprotty';
-import { SModelRoot, SNode, SLabel, SPort } from 'sprotty-protocol';
-import { Model } from './generated/ast.js';
+import { SModelRoot, SNode, SLabel, SPort, SEdge } from 'sprotty-protocol';
+import { Model, Person, Greeting } from './generated/ast.js';
 
 export class StatesDiagramGenerator extends LangiumDiagramGenerator {
 
@@ -27,79 +27,82 @@ export class StatesDiagramGenerator extends LangiumDiagramGenerator {
             type: 'graph',
             id: sm.$type ?? 'root',
             children: [
-                <SNode>{
-                    type: 'node',
-                    id: 'newPerson',
-                    children: [
-                        <SLabel>{
-                            type: 'label',
-                            id: 'newPerson.label',
-                            text: 'try1'
-                        },
-                        <SPort>{
-                            type: 'port',
-                            id: 'newPerson.Transition',
-                        }
-                    ],
-                    layout: 'stack',
-                    layoutOptions: {
-                        paddingTop: 10.0,
-                        paddingBottom: 10.0,
-                        paddingLeft: 10.0,
-                        paddingRight: 10.0
-                    }
-                },
 
-                // ...sm.persons.map(s => this.generateNode(s, args)),
-                // ...sm.greetings.map(t => this.generateEdge(t, args))
+                // working example
+
+                // <SNode>{
+                //     type: 'node',
+                //     id: 'newPerson',
+                //     children: [
+                //         <SLabel>{
+                //             type: 'label',
+                //             id: 'newPerson.label',
+                //             text: 'try1'
+                //         },
+                //         <SPort>{
+                //             type: 'port',
+                //             id: 'newPerson.Transition',
+                //         }
+                //     ],
+                //     layout: 'stack',
+                //     layoutOptions: {
+                //         paddingTop: 10.0,
+                //         paddingBottom: 10.0,
+                //         paddingLeft: 10.0,
+                //         paddingRight: 10.0
+                //     }
+                // },
+
+                ...sm.persons.map(s => this.generateNode(s, args)),
+                ...sm.greetings.map(t => this.generateEdge(t, args))
             ]
         };
     }
 
-    // protected generateNode(persons: Person, { idCache }: GeneratorContext<Model>): SNode {
-    //     const nodeId = idCache.uniqueId(persons.name, persons) ?? 'unnamed';
-    //     console.log('nodeId:', nodeId)
-    //     return {
-    //         type: 'node',
-    //         id: nodeId,
-    //         children: [
-    //             <SLabel>{
-    //                 type: 'label',
-    //                 id: idCache.uniqueId(nodeId + '.label'),
-    //                 text: persons.name ?? 'unnamed'
-    //             },
-    //             <SPort>{
-    //                 type: 'port',
-    //                 id: idCache.uniqueId(nodeId + '.newTransition') ?? 'newTransition',
-    //             }
-    //         ],
-    //         layout: 'stack',
-    //         layoutOptions: {
-    //             paddingTop: 10.0,
-    //             paddingBottom: 10.0,
-    //             paddingLeft: 10.0,
-    //             paddingRight: 10.0
-    //         }
-    //     };
-    // }
+    protected generateNode(persons: Person, { idCache }: GeneratorContext<Model>): SNode {
+        const nodeId = idCache.uniqueId(persons.name, persons);
+        console.log('nodeId:', nodeId)
+        return {
+            type: 'node',
+            id: nodeId,
+            children: [
+                <SLabel>{
+                    type: 'label',
+                    id: idCache.uniqueId(nodeId + '.label'),
+                    text: persons.name
+                },
+                <SPort>{
+                    type: 'port',
+                    id: idCache.uniqueId(nodeId + '.newTransition'),
+                }
+            ],
+            layout: 'stack',
+            layoutOptions: {
+                paddingTop: 10.0,
+                paddingBottom: 10.0,
+                paddingLeft: 10.0,
+                paddingRight: 10.0
+            }
+        };
+    }
 
-    // protected generateEdge(greetings: Greeting, { idCache }: GeneratorContext<Model>): SEdge {
-    //     const sourceId = idCache.getId(greetings.$container);
-    //     const targetId = idCache.getId(greetings);
-    //     const edgeId = idCache.uniqueId(`${sourceId}:${greetings}:${targetId}`, greetings);
-    //     return {
-    //         type: 'edge',
-    //         id: edgeId,
-    //         sourceId: sourceId!,
-    //         targetId: targetId!,
-    //         children: [
-    //             <SLabel>{
-    //                 type: 'label:xref',
-    //                 id: idCache.uniqueId(edgeId + '.label'),
-    //                 text: greetings.$type
-    //             }
-    //         ]
-    //     };
-    // }
+    protected generateEdge(greetings: Greeting, { idCache }: GeneratorContext<Model>): SEdge {
+        const sourceId = idCache.getId(greetings.$container);
+        const targetId = idCache.getId(greetings);
+        const edgeId = idCache.uniqueId(`${sourceId}:${greetings}:${targetId}`, greetings);
+        return {
+            type: 'edge',
+            id: edgeId,
+            sourceId: sourceId!,
+            targetId: targetId!,
+            children: [
+                <SLabel>{
+                    type: 'label:xref',
+                    id: idCache.uniqueId(edgeId + '.label'),
+                    text: greetings.$type + "edge"
+                }
+            ]
+        };
+    }
 
 }
