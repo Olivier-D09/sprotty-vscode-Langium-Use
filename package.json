@@ -18,8 +18,7 @@
     "eslint-plugin-no-null": "^1.0.2",
     "lerna": "^7.4.2",
     "shx": "^0.3.4",
-    "typescript": "~5.2.2",
-    "chalk": "^4.1.0"
+    "typescript": "~5.2.2"
   },
   "workspaces": [
     "packages/sprotty-vscode",
