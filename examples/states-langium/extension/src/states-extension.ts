@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
             extensionUri: context.extensionUri,
             defaultDiagramType: 'states',
             languageClient,
-            supportedFileExtensions: ['.sm']
+            supportedFileExtensions: ['.sgr']
         });
         registerDefaultCommands(webviewPanelManager, context, { extensionPrefix: 'states' });
     }
@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
             extensionUri: context.extensionUri,
             viewType: 'states',
             languageClient,
-            supportedFileExtensions: ['.sm']
+            supportedFileExtensions: ['.sgr']
         });
         context.subscriptions.push(
             vscode.window.registerCustomEditorProvider('states', webviewEditorProvider, {
@@ -64,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
             extensionUri: context.extensionUri,
             viewType: 'states',
             languageClient,
-            supportedFileExtensions: ['.sm'],
+            supportedFileExtensions: ['.sgr'],
             openActiveEditor: true,
             messenger: new Messenger({ignoreHiddenViews: false})
         });
