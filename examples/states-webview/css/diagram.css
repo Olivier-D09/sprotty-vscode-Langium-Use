@@ -1,5 +1,5 @@
 .sprotty-node {
-    fill: var(--vscode-button-background)
+    fill: rgba(206, 206, 30, 0.671);
 }
 
 .sprotty-node.selected {
@@ -8,7 +8,7 @@
 }
 
 .sprotty-label {
-    fill: var(--vscode-button-foreground);
+    fill: rgb(255, 22, 22);
     stroke-width: 0;
 }
 

@@ -23,7 +23,8 @@ import {
     HtmlRootView, LogLevel, ManhattanEdgeRouter, overrideViewerOptions, PreRenderedElementImpl,
     PreRenderedView, SGraphView, SLabelView, SModelRootImpl,
     SRoutingHandleImpl, SRoutingHandleView, TYPES, loadDefaultModules, SGraphImpl, SLabelImpl,
-    hoverFeedbackFeature, popupFeature, creatingOnDragFeature, editLabelFeature, labelEditUiModule, RectangularNodeView
+    hoverFeedbackFeature, popupFeature, creatingOnDragFeature, editLabelFeature, labelEditUiModule,
+    DiamondNodeView
 } from 'sprotty';
 import { CustomRouter } from './custom-edge-router';
 import { CreateTransitionPort, StatesEdge, StatesNode } from './model';
@@ -39,7 +40,7 @@ const statesDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) 
     configureModelElement(context, 'graph', SGraphImpl, SGraphView, {
         enable: [hoverFeedbackFeature, popupFeature]
     });
-    configureModelElement(context, 'node', StatesNode, RectangularNodeView,);
+    configureModelElement(context, 'node', StatesNode, DiamondNodeView,);
     configureModelElement(context, 'label', SLabelImpl, SLabelView, {
         enable: [editLabelFeature]
     });
