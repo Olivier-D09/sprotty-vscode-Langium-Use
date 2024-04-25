@@ -31,10 +31,6 @@ file : [langium-config.json](../examples/states-langium/language-server/langium-
 
 ![Screenshot](img/langium-config_json.jpg)
 
-file : [states-extension.ts](../examples/examples/states-langium/extension/src/states-extension.ts)
-
-![Screenshot](img/states-extension_ts.JPG)
-
 file : [module.ts](../examples/states-langium/language-server/src/generated/module.ts)
 
 ![Screenshot](img/module_ts.JPG)
